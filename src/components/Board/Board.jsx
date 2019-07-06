@@ -21,7 +21,7 @@ function Board({ board }) {
       winner = board.mark
       showModal(!modealAppear)
     }
-    
+
     if (board.isBoardFull()) showModal(!modealAppear)
     board.shiftMark()
   }
@@ -58,6 +58,11 @@ const GridContainer = styled.div`
   display: grid;
   grid-template-columns: auto auto auto auto auto auto auto;
   justify-items: center;
+
+  position: absolute;
+  top: 30%;
+  left: 40%;
+  transform: translate(-50%, -50%);
 
   width: 800px;
 
