@@ -1,42 +1,28 @@
-import React, { useState } from "react";
-import styled from 'styled-components';
+import React from "react"
+import styled from 'styled-components'
 
 import Modal from '../Modal/WinnerModal'
 
-let winner = -1
+import useBoardState from '../../useBoardState'
+import useWinnerModalState from '../../useWinnerModalState'
 
 function Board({ board }) {
-  const [render, renderAction] = useState(false)
-  const [modealAppear, showModal] = useState(false)
-
-  const itemClickHandler = (e) => {
-    let col = Number(e.target.dataset.col)
-    let emptyTile = board.emptyTile(Number(col))
-    if (emptyTile !== -1) {
-      board.putMark(emptyTile, col , board.mark)
-    }
-    renderAction(!render)
-    
-    if (board.isMatch(emptyTile, col, board.mark)) {
-      winner = board.mark
-      showModal(!modealAppear)
-    }
-
-    if (board.isBoardFull()) showModal(!modealAppear)
-    board.shiftMark()
-  }
+  const { winner, updateWinner } = useWinnerModalState()
+  const { boards, updateBoard } = useBoardState(board, updateWinner)
 
   const createGrid = () => {
     let grid = []
-    
-    for (let row = 0; row < board.board.length; row++) {
-      for (let col = 0; col < board.board[0].length; col++) {
+    let currentBoard = boards[boards.length - 1]
+
+    for (let row = 0; row < currentBoard.board.length; row++) {
+      for (let col = 0; col < currentBoard.board[0].length; col++) {
         grid.push(<GridItem
-                    key={row + ' ' + col} 
-                    data-row={row} 
-                    data-col={col}
-                    val={board.board[row][col]} 
-                    onClick={itemClickHandler}/>)
+                      key={row + ' ' + col} 
+                      data-row={row} 
+                      data-col={col}
+                      val={currentBoard.board[row][col]} 
+                      onClick={updateBoard}
+                    />)
       }
     }      
     return grid.reverse()

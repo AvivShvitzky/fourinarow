@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import { PLAYER_ONE_WINNING_MESSAGE, PLAYER_TWO_WINNING_MESSAGE, TIE_MESSAGE } from '../../consts/consts'
 
+import useWinnerModalState from '../../useWinnerModalState'
+
 let text = ''
 const changeText = winner => {
   if (winner === 0) text = TIE_MESSAGE
@@ -10,8 +12,9 @@ const changeText = winner => {
   if (winner === 2) text = PLAYER_TWO_WINNING_MESSAGE
 }
 
-function Modal({ winner }) {
- 
+function Modal({winner}) {
+  // const { winner } = useWinnerModalState()
+
   changeText(winner)
 
   return (
@@ -26,7 +29,6 @@ function Modal({ winner }) {
 }
 
 export default Modal
-
 
 const Box = styled.div`
   display: ${( { winner } ) => winner < 0 ? 'none' : 'block'}; 

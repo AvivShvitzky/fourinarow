@@ -108,7 +108,7 @@ class Board {
     return true
   }
 
- }
+  }
 
 
 export default Board
